@@ -4,6 +4,7 @@ import(
 	"fmt"
 	"bufio"
 	"os"
+	"io"
 	"log"
 	"strings"
 )
@@ -11,16 +12,16 @@ import(
 // I am well aware this may be unefficient but the Book set those constraints
 
 func main(){
-	name := readInput()
+	name := readInput(os.Stdin)
 	greeting := buildGreetingString(name)
 	printGreeting(greeting)
 }
 
 
-func readInput() (name string){
+func readInput(reader io.Reader) (name string){
 	fmt.Println("What is your name?")
-	reader := bufio.NewReader(os.Stdin)
-	name, err := reader.ReadString('\n')
+	bufReader := bufio.NewReader(reader)
+	name, err := bufReader.ReadString('\n')
 	name = strings.TrimSpace(name)
 	if err != nil{
 		log.Fatal(err)
