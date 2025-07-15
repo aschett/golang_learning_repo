@@ -5,3 +5,4 @@ This will be a small repo where i want to learn golang. This repo will follow th
 
 - Exercise 1 - [Saying Hello](./Part_1_Challenges/sayingHello/)
 - Exercise 2 - [Counting the Number of Characters](./Part_1_Challenges/countingNumberChars/)
+- Exercise 3 - [Printing Quotes](./printingQuotes/)
