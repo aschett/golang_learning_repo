@@ -27,3 +27,11 @@ func readInput(reader io.Reader, prompt string) (string, error) {
 	}
 	return input, nil
 }
+
+func createOuputString(quoteInfo quoteInformation) (string, error) {
+	if quoteInfo.Quote == "" || quoteInfo.Speaker == "" {
+		return "", fmt.Errorf("quoteInformation struct not specified correctly")
+	}
+	outputString := "\" " + quoteInfo.Quote + " \"" + " - " + quoteInfo.Speaker
+	return outputString, nil
+}
