@@ -1,9 +1,11 @@
-package printingquotes
+package main
 
 import (
 	"bufio"
 	"fmt"
 	"io"
+	"os"
+	"strings"
 )
 
 type quoteInformation struct {
@@ -12,13 +14,31 @@ type quoteInformation struct {
 }
 
 func main() {
+	var quoteInfo quoteInformation
+	var err error
+	quoteInfo.Quote, err = readInput(os.Stdin, "What is the Quote?")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	quoteInfo.Speaker, err = readInput(os.Stdin, "Who said it?")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 
+	outputString, err := createOuputString(quoteInfo)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+	fmt.Print(outputString)
 }
 
 func readInput(reader io.Reader, prompt string) (string, error) {
 	fmt.Println(prompt)
 	bufReader := bufio.NewReader(reader)
 	input, err := bufReader.ReadString('\n')
+	input = strings.TrimSpace(input)
 	if err != nil {
 		return "", fmt.Errorf("failed to read input: %w", err)
 	}
@@ -32,6 +52,6 @@ func createOuputString(quoteInfo quoteInformation) (string, error) {
 	if quoteInfo.Quote == "" || quoteInfo.Speaker == "" {
 		return "", fmt.Errorf("quoteInformation struct not specified correctly")
 	}
-	outputString := "\" " + quoteInfo.Quote + " \"" + " - " + quoteInfo.Speaker
+	outputString := "\"" + quoteInfo.Quote + "\"" + " - " + quoteInfo.Speaker + "\n"
 	return outputString, nil
 }
